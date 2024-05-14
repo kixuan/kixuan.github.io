@@ -1,0 +1,342 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SpringMVC | 炫仔的Blog</title><meta name="author" content="Xuan"><meta name="copyright" content="Xuan"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="主要内容 SpringMVC简介 请求与响应 REST风格 SSM整合(注解版) 拦截器  SpringMVC的制作过程 创建maven项目，补全目录结构 导入jar包，添加SpringMVC需要的依赖与servlet；配置Tomcat环境 创建Controller类：声明bean、提供方法处理请求、设置访问路径、设置当前操作返回值 创建springmvc的配置类，加载controller对应的b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC">
+<meta property="og:url" content="http://kixuan.github.io/posts/12ac/index.html">
+<meta property="og:site_name" content="炫仔的Blog">
+<meta property="og:description" content="主要内容 SpringMVC简介 请求与响应 REST风格 SSM整合(注解版) 拦截器  SpringMVC的制作过程 创建maven项目，补全目录结构 导入jar包，添加SpringMVC需要的依赖与servlet；配置Tomcat环境 创建Controller类：声明bean、提供方法处理请求、设置访问路径、设置当前操作返回值 创建springmvc的配置类，加载controller对应的b">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://kixuan.github.io/img/index_background.jpg">
+<meta property="article:published_time" content="2023-06-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-04-24T12:50:52.379Z">
+<meta property="article:author" content="Xuan">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://kixuan.github.io/img/index_background.jpg"><link rel="shortcut icon" href="/img/avatar.png"><link rel="canonical" href="http://kixuan.github.io/posts/12ac/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":"ture","top_n_per_article":2,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: ,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SpringMVC',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-04-24 20:50:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const now = new Date()
+          const hour = now.getHours()
+          const isNight = hour <= 6 || hour >= 18
+          if (t === undefined) isNight ? activateDarkMode() : activateLightMode()
+          else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0">
+<style>.github-emoji { position: relative; display: inline-block; width: 1.2em; min-height: 1.2em; overflow: hidden; vertical-align: top; color: transparent; }  .github-emoji > span { position: relative; z-index: 10; }  .github-emoji img, .github-emoji .fancybox { margin: 0 !important; padding: 0 !important; border: none !important; outline: none !important; text-decoration: none !important; user-select: none !important; cursor: auto !important; }  .github-emoji img { height: 1.2em !important; width: 1.2em !important; position: absolute !important; left: 50% !important; top: 50% !important; transform: translate(-50%, -50%) !important; user-select: none !important; cursor: auto !important; } .github-emoji-fallback { color: inherit; } .github-emoji-fallback img { opacity: 0 !important; }</style>
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/主页背景图.jpg" data-original="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-bookmark"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/freetalk"><i class="fa-fw fas fa-comments-o"></i><span> 聊点小天</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 听点小歌</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 看点小番</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 读点小书</span></a></li><li><a class="site-page child" href="/arttalk/"><i class="fa-fw fas fa-share-alt-square"></i><span> 人生小记</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 个人</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comment/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/aboutme/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: D:/Blog/source/_posts/img/springday"><nav id="nav"><span id="blog-info"><a href="/" title="炫仔的Blog"><span class="site-name">炫仔的Blog</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-bookmark"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fas fa-archive"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fas fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/freetalk"><i class="fa-fw fas fa-comments-o"></i><span> 聊点小天</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 听点小歌</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 看点小番</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 读点小书</span></a></li><li><a class="site-page child" href="/arttalk/"><i class="fa-fw fas fa-share-alt-square"></i><span> 人生小记</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 个人</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/links/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></li><li><a class="site-page child" href="/comment/"><i class="fa-fw fas fa-paper-plane"></i><span> 留言板</span></a></li><li><a class="site-page child" href="/aboutme/"><i class="fa-fw fas fa-user"></i><span> 关于我</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SpringMVC</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-06-07T16:00:00.000Z" title="发表于 2023-06-08 00:00:00">2023-06-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-04-24T12:50:52.379Z" title="更新于 2024-04-24 20:50:52">2024-04-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">968</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="SpringMVC"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="主要内容"><a href="#主要内容" class="headerlink" title="主要内容"></a><strong>主要内容</strong></h1><ul>
+<li>SpringMVC简介</li>
+<li><strong>请求与响应</strong></li>
+<li><strong>REST风格</strong></li>
+<li><strong>SSM整合(注解版)</strong></li>
+<li>拦截器</li>
+</ul>
+<h1 id="SpringMVC的制作过程"><a href="#SpringMVC的制作过程" class="headerlink" title="SpringMVC的制作过程"></a><strong>SpringMVC的制作过程</strong></h1><ol>
+<li>创建maven项目，补全目录结构</li>
+<li>导入jar包，添加SpringMVC需要的依赖与servlet；配置Tomcat环境</li>
+<li>创建Controller类：声明bean、提供方法处理请求、设置访问路径、设置当前操作返回值</li>
+<li>创建springmvc的配置类，加载controller对应的bean</li>
+<li>使用servlet容器启动的配置类替换web.xml</li>
+<li>启动项目、浏览器访问</li>
+</ol>
+<ul>
+<li><p>相关注解</p>
+<p>  <strong>@Controller：</strong> 设定SpringMVC的核心控制器bean【Controller类处】</p>
+<p>  <strong>@RequestMapping：</strong> 设置当前控制器方法请求访问路径【Controller类具体方法前：(”/save”)】</p>
+<p>  <strong>@ResponseBody：</strong> 设置当前控制器方法响应内容为当前返回值【Controller类具体方法前】</p>
+</li>
+</ul>
+<h1 id="设置springmvc和spring的加载范围"><a href="#设置springmvc和spring的加载范围" class="headerlink" title="设置springmvc和spring的加载范围"></a>设置springmvc和spring的加载范围</h1><ul>
+<li><p>SpringMVC加载其相关bean(表现层bean),也就是controller包下的类</p>
+</li>
+<li><p>Spring控制的bean</p>
+<ul>
+<li>业务bean(Service)</li>
+<li>功能bean(DataSource,SqlSessionFactoryBean,MapperScannerConfigurer等)</li>
+</ul>
+</li>
+<li><p>相关注解</p>
+<p>  <strong>@ComponentScan</strong>：设置spring配置类扫描路径【类上方，属性：excludeFilters&amp;includeFilters&amp;type】</p>
+  <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">@ComponentScan({"com.itheima.service","comitheima.dao"})</span></span><br></pre></td></tr></tbody></table></figure>
+  <figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">@ComponentScan(value="com.itheima",</span></span><br><span class="line"><span class="meta">    excludeFilters=@ComponentScan.Filter(</span></span><br><span class="line"><span class="meta">        type = FilterType.ANNOTATION,</span></span><br><span class="line"><span class="meta">        classes = Controller.class  //过滤的注解类型</span></span><br><span class="line"><span class="meta">    )</span></span><br><span class="line"><span class="meta">)</span></span><br></pre></td></tr></tbody></table></figure></li>
+</ul>
+<h1 id="springmvc更简单的配置类"><a href="#springmvc更简单的配置类" class="headerlink" title="springmvc更简单的配置类"></a><strong>springmvc更简单的配置类</strong></h1><figure class="highlight java"><table><tbody><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ServletContainersInitConfig</span> <span class="keyword">extends</span> <span class="title class_">AbstractAnnotationConfigDispatcherServletInitializer</span> {</span><br><span class="line">        <span class="comment">//加载spring配置类</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt;[] getRootConfigClasses() {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Class</span>[]{SpringConfig.class};</span><br><span class="line">    }</span><br><span class="line">        <span class="comment">//加载指定(springmvcc)配置类</span></span><br><span class="line">    <span class="keyword">protected</span> Class&lt;?&gt;[] getServletConfigClasses() {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Class</span>[]{SpringMvcConfig.class};</span><br><span class="line">    }</span><br><span class="line">        <span class="comment">//设置由springmvc控制器处理的请求映射路径</span></span><br><span class="line">    <span class="keyword">protected</span> String[] getServletMappings() {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">String</span>[]{<span class="string">"/"</span>};</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></tbody></table></figure>
+
+<h1 id="请求与响应"><a href="#请求与响应" class="headerlink" title="请求与响应"></a><strong>请求与响应</strong></h1><ul>
+<li><p>区分访问不同controller相同名字的方法</p>
+<ol>
+<li>在访问路径前加controller区分</li>
+<li>在类前面新增@RequestMapping(“/方法名”)</li>
+</ol>
+</li>
+<li><p>接收页面传递的参数</p>
+<ul>
+<li><p>GET/POST  —发送单/多个参数</p>
+<ul>
+<li>直接在方法处接受参数</li>
+<li>普通、POJO、嵌套POJO、数组、集合</li>
+</ul>
+</li>
+<li><p>解决请求乱码问题</p>
+<ul>
+<li>GET：修改pom.xml</li>
+<li>POST:配置过滤器</li>
+</ul>
+</li>
+<li><p>形参与地址参数名不一致</p>
+<p>  使用**@RequestParam**注解</p>
+</li>
+<li><p>接收日期/时间类型</p>
+<p>  使用@DateTimeFormat注解</p>
+</li>
+</ul>
+</li>
+<li><p>相关注解</p>
+<ol>
+<li><strong>@REQUESTPARAM：</strong> 绑定请求参数与处理器方法形参间的关系【方法具体参数处】</li>
+<li><strong>@ENABLEWEBMVC：</strong> 开启SpringMVC多项辅助功能【配置类定义上方】</li>
+<li><strong>@RequestBody：</strong> 将请求中请求体所包含的数据传递给请求参数、设置当前控制器返回值作为响应体【方法形参定义前面】</li>
+<li><strong>@DateTimeFormat</strong> ：设定日期时间型数据格式【方法具体参数处】</li>
+</ol>
+</li>
+</ul>
+<h1 id="REST风格"><a href="#REST风格" class="headerlink" title="REST风格"></a><strong>REST风格</strong></h1><p>使用<strong>行为动作</strong>区分对资源进行了何种操作：查询(GET)新增(POST)修改(PUT)删除(DELETE)</p>
+<p>页面访问：SpringMVC需要将静态资源进行放行</p>
+<ul>
+<li><p>相关注解</p>
+<p>  <strong>@RestController：</strong> 等同于@Controller与@ResponseBody两个注解组合功能</p>
+<p>  <strong>@GetMapping @PostMapping @PutMapping @DeleteMapping：</strong> 设置当前控制器方法请求访问路径与请求动作，每种对应一个请求动作【注意delete和get后面要有具体id】</p>
+</li>
+</ul>
+<h1 id="SSM整合"><a href="#SSM整合" class="headerlink" title="SSM整合"></a><strong>SSM整合</strong></h1><blockquote>
+<p>李老师大好人，就是把之前所有的代码都理了一遍</p>
+</blockquote>
+<ul>
+<li><p>整合配置</p>
+<ol>
+<li>创建web项目</li>
+<li>添加依赖</li>
+<li>创建项目包结构</li>
+<li>创建ssm+jdbc-config配置类</li>
+</ol>
+</li>
+<li><p>功能模块开发</p>
+<ol>
+<li>table</li>
+<li>domain</li>
+<li>Dao</li>
+<li>Service</li>
+<li>Controller</li>
+</ol>
+</li>
+<li><p>单元/PostMan测试</p>
+</li>
+<li><p>事务管理</p>
+<ol>
+<li>SpringConfig</li>
+<li>jdbcConfig</li>
+<li>BookService</li>
+</ol>
+</li>
+<li><p><strong>统一结果封装</strong></p>
+<ol>
+<li>Result类</li>
+<li>Code类</li>
+<li>修改Controller类的返回值</li>
+</ol>
+</li>
+<li><p><strong>统一异常处理</strong></p>
+<ol>
+<li>创建异常处理器类</li>
+<li>搞个异常测试一下</li>
+</ol>
+</li>
+<li><p>相关注解</p>
+<p>  <strong>@RestControllerAdvice：</strong> 为Rest风格开发的控制器类做增强</p>
+<p>  <strong>@ExceptionHandler：</strong> 设置指定异常的处理方案</p>
+</li>
+</ul>
+<h1 id="前后台协议联调"><a href="#前后台协议联调" class="headerlink" title="前后台协议联调"></a>前后台协议联调</h1><ol>
+<li>将静态资源进行放行</li>
+<li>根据不同业务进行不同操作</li>
+</ol>
+<h1 id="拦截器"><a href="#拦截器" class="headerlink" title="拦截器"></a>拦截器</h1><ul>
+<li>开发步骤<ol>
+<li>创建拦截器类interceptor</li>
+<li>配置拦截器类SpringMvcConfig</li>
+<li>修改拦截器拦截规则</li>
+<li>配置多个拦截器</li>
+</ol>
+</li>
+<li>拦截器参数<ul>
+<li>request、response、<strong>handler、</strong> modelAndView</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>一般环境准备步骤</p>
+<ol>
+<li>创建一个Web的Maven项目</li>
+<li>pom.xml添加Spring依赖</li>
+<li>创建对应的配置类（config）</li>
+<li>编写controller、domain</li>
+<li>（启动一下看是否能正常运行）</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://kixuan.github.io">Xuan</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://kixuan.github.io/posts/12ac/">http://kixuan.github.io/posts/12ac/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://kixuan.github.io" target="_blank">炫仔的Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/index_background.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/c1c1/" title="Spring-Day02  —  注解开发"><img class="cover" src="/img/主页背景图.jpg" data-original="/img/index_background.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Spring-Day02  —  注解开发</div></div></a></div><div class="next-post pull-right"><a href="/posts/308c/" title="Spring-Day03  — AOP"><img class="cover" src="/img/主页背景图.jpg" data-original="/img/index_background.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Spring-Day03  — AOP</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content is-expand"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E8%A6%81%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">主要内容</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SpringMVC%E7%9A%84%E5%88%B6%E4%BD%9C%E8%BF%87%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">SpringMVC的制作过程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AEspringmvc%E5%92%8Cspring%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%8C%83%E5%9B%B4"><span class="toc-number">3.</span> <span class="toc-text">设置springmvc和spring的加载范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#springmvc%E6%9B%B4%E7%AE%80%E5%8D%95%E7%9A%84%E9%85%8D%E7%BD%AE%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">springmvc更简单的配置类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E4%B8%8E%E5%93%8D%E5%BA%94"><span class="toc-number">5.</span> <span class="toc-text">请求与响应</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#REST%E9%A3%8E%E6%A0%BC"><span class="toc-number">6.</span> <span class="toc-text">REST风格</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SSM%E6%95%B4%E5%90%88"><span class="toc-number">7.</span> <span class="toc-text">SSM整合</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E5%90%8E%E5%8F%B0%E5%8D%8F%E8%AE%AE%E8%81%94%E8%B0%83"><span class="toc-number">8.</span> <span class="toc-text">前后台协议联调</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8B%A6%E6%88%AA%E5%99%A8"><span class="toc-number">9.</span> <span class="toc-text">拦截器</span></a></li></ol></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2024 By Xuan</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><a target="_blank" href="https://wap.miit.gov.cn/" >我好像没有备号o_o ....</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="true" data-text="bug--,fix++,error--,success++,happy++,sad--" data-fontsize="15px" data-random="true" async="async"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div class="no-result" id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div></div>
+        <style>
+            [bg-lazy] {
+                background-image: none !important;
+                background-color: #eee !important;
+            }
+        </style>
+        <script>
+            window.imageLazyLoadSetting = {
+                isSPA: false,
+                preloadRatio: 1,
+                processImages: null,
+            };
+        </script><script>window.addEventListener("load",function(){var t=/\.(gif|jpg|jpeg|tiff|png)$/i,r=/^data:image\/[a-z]+;base64,/;Array.prototype.slice.call(document.querySelectorAll("img[data-original]")).forEach(function(a){var e=a.parentNode;"A"===e.tagName&&(e.href.match(t)||e.href.match(r))&&(e.href=a.dataset.original)})});</script><script>!function(r){r.imageLazyLoadSetting.processImages=t;var e=r.imageLazyLoadSetting.isSPA,n=r.imageLazyLoadSetting.preloadRatio||1,c=a();function a(){var t=Array.prototype.slice.call(document.querySelectorAll("img[data-original]")),e=Array.prototype.slice.call(document.querySelectorAll("[bg-lazy]"));return t.concat(e)}function t(){e&&(c=a());for(var t,o=0;o<c.length;o++)0<=(t=(t=c[o]).getBoundingClientRect()).bottom&&0<=t.left&&t.top<=(r.innerHeight*n||document.documentElement.clientHeight*n)&&function(){var t,e,n,a,i=c[o];e=function(){c=c.filter(function(t){return i!==t}),r.imageLazyLoadSetting.onImageLoaded&&r.imageLazyLoadSetting.onImageLoaded(i)},(t=i).hasAttribute("bg-lazy")?(t.removeAttribute("bg-lazy"),e&&e()):(n=new Image,a=t.getAttribute("data-original"),n.onload=function(){t.src=a,t.removeAttribute("data-original"),e&&e()},t.src!==a&&(n.src=a))}()}function i(){clearTimeout(t.tId),t.tId=setTimeout(t,500)}t(),document.addEventListener("scroll",i),r.addEventListener("resize",i),r.addEventListener("orientationchange",i)}(this);</script></body></html>
