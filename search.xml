@@ -549,10 +549,10 @@
     
     <entry>
       <title>慢慢填坑</title>
-      <link href="/posts/da6a/"/>
-      <url>/posts/da6a/</url>
+      <link href="/posts/stepbystep/"/>
+      <url>/posts/stepbystep/</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><hr><p>博客待更新Plan:</p><ol><li>搜索功能失效</li><li>首页图片加载过慢</li><li>各文章暂未进行分类  ✅</li><li>生活模块的听歌(wyy音乐播放器)、读书、小记(artitalk)页面待完善</li><li>个人模块的友链、留言区、关于我页面待新增</li><li>每次hexo g都会把所有文章更新一次  ✅</li></ol><blockquote><p>2024 - 09 - 28 更新</p></blockquote><ol><li>初步完成文章分类</li><li>完成友链、聊点小天页面内容</li><li>关于hexo g<ol><li>作用就是重新生成public文件夹下的所有内容</li><li>现在采用的是Github Page静态页面部署方式，如果更改了config配置，则必须使用hexo g，如果没有的话可以直接hexo c&amp;&amp;hexo d</li></ol></li></ol><blockquote><p>2024 - 12 - 30 fix</p></blockquote><ol><li>修复了hexo g 不生成index.html的bug</li></ol>]]></content>
+        <content type="html"><![CDATA[<hr><p>博客待更新Plan:</p><ol><li>搜索功能失效</li><li>首页图片加载过慢</li><li>各文章暂未进行分类  ✅</li><li>生活模块的听歌(wyy音乐播放器)、读书、小记(artitalk)页面待完善</li><li>个人模块的友链、留言区、关于我页面待新增</li><li>每次hexo g都会把所有文章更新一次  ✅</li></ol><blockquote><p>2024 - 09 - 28 update</p></blockquote><ol><li>初步完成文章分类</li><li>完成友链、聊点小天页面内容</li><li>关于hexo g<ol><li>作用就是重新生成public文件夹下的所有内容</li><li>现在采用的是Github Page静态页面部署方式，如果更改了config配置，则必须使用hexo g，如果没有的话可以直接hexo c&amp;&amp;hexo d</li></ol></li></ol><blockquote><p>2024 - 12 - 30 fix</p></blockquote><ol><li>修复了hexo g 不生成index.html的bug</li></ol><blockquote><p>2025 - 02 - 11 feat</p></blockquote><ol><li><p>添加网易云播放器页面（我的小窝终于有声音了TT，todo: 下次优化好看点）</p></li><li><p>修复了B站插件hexo-bilibili-bangumi报错 <code>ReferenceError: ReadableStream is not defined</code> 的问题</p></li></ol>]]></content>
       
       
       
